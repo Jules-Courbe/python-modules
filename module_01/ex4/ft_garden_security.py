@@ -9,7 +9,7 @@ class plante:
         print(f"Created: {self.name}: {self.height:.1f}cm, {self.age} old")
 
     def set_height(self, height):
-        self.height = height.round()
+        self.height = round(height)
         if height < 0:
             self.height = 0
             print("{self.name}: Error, age can't be negative")
@@ -33,10 +33,15 @@ class plante:
     def __str__(self):
         return f"Current state: {self.name}: {self.height:.1f}cm, {self.age} old"
 
-
-if __name__ == "__main__":
-    Rose = plante("Rose", 15, 10)
-
+def main(string :str) -> None:
+    print("=== Garden Plant Types ===")
+    Rose = plante(string, 15, 10)
     Rose.set_height(25)
     Rose.set_age(-96)
     print(Rose)
+    return None
+
+
+
+if __name__ == "__main__":
+    main("Rose")
