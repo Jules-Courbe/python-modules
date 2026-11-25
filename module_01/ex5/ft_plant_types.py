@@ -3,7 +3,7 @@
 class plante:
 
     def __init__(self, name, height, age):
-        self.name = name
+        self.name = name.capitalize()
         self.height = height
         self.age = age
 
@@ -26,10 +26,10 @@ class plante:
             print(f"Age updated: {self.age}")
 
     def show(self):
-        print(f"Created: {self.name}: {self.height:.1f}cm, {self.age} old")
+        print(f"{self.name}: {self.height:.1f}cm, {self.age} days old")
 
     def __str__(self):
-        return f"Current state: {self.name}: {self.height:.1f}cm,{self.age} old"
+        return f"Current state: {self.name}: {self.height:.1f}cm,{self.age} days old"
 
 
 class flower(plante):
@@ -37,8 +37,7 @@ class flower(plante):
         super().__init__(name, height, age)
         self.color = color
 
-
-    def bloom(self, height, age):
+    def bloom(self, height, age, color):
         self.height = height
         self.age = age
         print("[asking the rose to bloom]")
@@ -51,45 +50,52 @@ class flower(plante):
 
 
 class tree(plante):
-    def __init__(self, name, height, age, trunk_diameter, long_shade, wide_shade):
+    def __init__(self, name, height, age, trunk_diameter):
         super().__init__(name, height, age)
-        self.wide_shade = long_shade
-        self.long_shade = wide_shade
         self.trunk_diameter = trunk_diameter
 
-    def produce_shade(self, trunk_diameter, long_shade, wide_shade):
-        #faire un calcul plus le tronc est gros plus l ombre devient grosse. 
-        self.long_shade = long_shade
-        self.wide_shade = wide_shade
+    def produce_shade(self, height, trunk_diameter):
         print("[asking the oak to produce shade]")
+        print(f"Tree Oak now produces a shade of {self.height} long and {self.trunk_diameter}cm wide.")
 
     def show(self,):
         super().show()
         print(f"Trunk diameter: {self.trunk_diameter}cm")
-        print(f"Tree Oak now produces a shade of {self.long_shade} long and {self.wide_shade}cm wide.")
 
 
 class vegetable(plante):
     def __init__(self, name, height, age, harvest_season):
-        super().__init__(self)
-        self.harvest_season = harvest_season
+        super().__init__(name, height, age)
+        self.harvest_season = harvest_season.capitalize()
+        self.nutritional_value = 0
 
-    def nutritional_value(self, height, age,):
-        self.height = height
+    def grow(self, age, height, nutritional_value):
         self.age = age
+        self.height = height
+        self.nutritional_value = nutritional_value
         print(f"[make tomato grow and age for {self.age} days]")
         super().show()
+        print(f" Harvest season: {self.harvest_season}")
+        print(f" Nutritional value: {self.nutritional_value}")
 
-    def show(self):
+    def show(self, nutritional_value):
         super().show()
-        print("Color: red Rose has not bloomed yet")
         print(f"Harvest season: {self.harvest_season}")
-        print("Nutritional value: 0")
+        print(f"Nutritional value: {self.nutritional_value}")
+
+
+def main(name_flower: str, name_tree: str, name_vegetable: str):
+    print("=== Garden Plant Types ===")
+    Rose = flower(name_flower, 15, 10, "red")
+    Rose.show()
+    Rose.bloom(15, 10, "red")
+    Oak = tree(name_tree, 15000, 150, 25)
+    Oak.show()
+    Oak.produce_shade(50, 60)
+    tomato = vegetable(name_vegetable, 5, 10, "april")
+    tomato.show(0)
+    tomato.grow(30, 47, 20)
 
 
 if __name__ == "__main__":
-    Rose = flower("Rose", 15, 10, "red")
-    Rose.show()
-    Oak = tree("Oak", 15000, 150, 25, 0, 0)
-    Oak.show()
-    Oak.produce_shade(50, 60)
+    main("rose", "oak", "tomato")
